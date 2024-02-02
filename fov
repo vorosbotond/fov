@@ -1,0 +1,28 @@
+// ==UserScript==
+// @name         Unstoppable FOV Chaos
+// @namespace    http://tampermonkey.net/
+// @version      3.0
+// @description  Unleash absolute mayhem by forcibly expanding Arras.io FOV.
+// @author       The Dark Overlord
+// @match        https://arras.io/*
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    const observer = new MutationObserver(() => {
+        const gameContainer = document.getElementById('gameCanvas');
+
+        if (gameContainer) {
+            observer.disconnect();
+            const currentScale = parseFloat(gameContainer.style.transform.match(/\d+\.\d+/)[0]);
+            const newScale = currentScale * 1.5; // Adjust the multiplier for unparalleled malevolence
+            gameContainer.style.transform = `scale(${newScale})`;
+        }
+    });
+
+    const observerConfig = { attributes: true, childList: true, subtree: true };
+    observer.observe(document.body, observerConfig);
+
+})();
